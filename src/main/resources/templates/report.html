@@ -1,0 +1,102 @@
+<div class="generic-container">
+    <div class="alert alert-success" role="alert" ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
+    <div class="alert alert-danger" role="alert" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>Report Form</strong>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                <form class="form-horizontal" name="myForm" ng-submit="ctrl.getReport()" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : myForm.headhunter.$invalid && (myForm.headhunter.$dirty)}">
+                        <label class="control-lable col-md-2">Head Hunter:</label>
+                        <div class="col-md-10">
+                            <select
+                                    ng-model="ctrl.report.headhunter" class="form-group"
+                                    name="headhunter"
+                                    ng-options="headhunter.name for headhunter in ctrl.getAllHeadhunters() track by headhunter.id" ng-required="true">
+                                <option value="">-- choose headhunter --</option>
+                            </select> <p
+                                ng-show="myForm.headhunter.$error.required && (myForm.headhunter.$dirty)"
+                                class="help-block">Head Hunter is required.</p>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : myForm.year.$invalid && (myForm.year.$dirty)}">
+                        <label class="control-lable col-md-2">Year:</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="year" placeholder="year"
+                                   ng-model="ctrl.report.year" ng-required="true" >
+                            <p
+                                    ng-show="myForm.year.$error.required && (myForm.year.$dirty)"
+                                    class="help-block">Recruited Year is required.</p>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : myForm.month.$invalid && (myForm.month.$dirty)}">
+                        <label class="control-lable col-md-2">Month:</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" name="month" placeholder="month"
+                                   ng-model="ctrl.report.month" ng-required="true" >
+                            <p
+                                    ng-show="myForm.month.$error.required && (myForm.month.$dirty)"
+                                    class="help-block">Recruited Month is required.</p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input type="submit" value="Submit" class="btn btn-primary btn-sm"
+                                   ng-disabled="myForm.$invalid || myForm.$pristine">
+                            <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm"
+                                    ng-disabled="myForm.$pristine">Reset Form
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default" ng-hide="!ctrl.employees">
+                <div class="panel-heading">
+                    <strong >Employee Details</strong>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Job</th>
+                            <th>Head Hunter</th>
+                            <th>Recruited Date </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="emp in ctrl.employees">
+                            <td>{{emp.firstName}}</td>
+                            <td>{{emp.lastName}}</td>
+                            <td>{{emp.job.title}}</td>
+                            <td>{{emp.headhunter.name}}</td>
+                            <td>{{emp.recruitedDate}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-default" ng-hide="!ctrl.totalCost">
+                <div class="panel-heading">
+                    <strong >Recruitment Cost Details</strong>
+                </div>
+                <div class="panel-body">
+
+                    <p>Year is :{{ctrl.report.year}}</p>
+                    <p>Month is :{{ctrl.report.month}}</p>
+                    <p>Cost is :{{ctrl.totalCost}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
